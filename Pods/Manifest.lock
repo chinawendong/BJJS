@@ -1,0 +1,41 @@
+PODS:
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.4):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - DTKDropdownMenu (0.0.4):
+    - Masonry (~> 0.6)
+  - FMDB (2.6):
+    - FMDB/standard (= 2.6)
+  - FMDB/standard (2.6)
+  - Masonry (0.6.4)
+
+DEPENDENCIES:
+  - AFNetworking (~> 2.5.4)
+  - DTKDropdownMenu (~> 0.0.4)
+  - FMDB
+
+SPEC CHECKSUMS:
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  DTKDropdownMenu: 3a3d8afc4f70fab50a5a8131aadc8b383ef54891
+  FMDB: c1968bab3ab0aed38f66cb778ae1e7fa9a652b6e
+  Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
+
+COCOAPODS: 0.39.0

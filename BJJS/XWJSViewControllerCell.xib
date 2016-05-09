@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="XWJSViewControllerCell" id="KGk-i7-Jjw" customClass="XWJSViewControllerCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <toolbar opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="luU-Sn-Bwv">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <items>
+                            <barButtonItem title="Item" id="7fl-BS-S8b">
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </barButtonItem>
+                            <barButtonItem systemItem="flexibleSpace" id="d3z-J0-c2T"/>
+                            <barButtonItem title="Item" id="LLb-lg-qiM">
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </barButtonItem>
+                            <barButtonItem systemItem="flexibleSpace" id="QLk-7L-xxq"/>
+                            <barButtonItem title="Item" id="BmN-Im-ScQ">
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </barButtonItem>
+                            <barButtonItem systemItem="flexibleSpace" id="gcS-6U-F8x"/>
+                            <barButtonItem title="Item" id="6Ed-qo-Q8t">
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </barButtonItem>
+                        </items>
+                        <color key="barTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </toolbar>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="luU-Sn-Bwv" secondAttribute="bottom" id="7wr-Tu-l6l"/>
+                    <constraint firstItem="luU-Sn-Bwv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="8Up-jc-den"/>
+                    <constraint firstAttribute="trailing" secondItem="luU-Sn-Bwv" secondAttribute="trailing" id="jyz-Z9-UDj"/>
+                    <constraint firstItem="luU-Sn-Bwv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ng2-6C-0mk"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="toolbar" destination="luU-Sn-Bwv" id="Tgk-YH-NfD"/>
+                <outletCollection property="arrayItem" destination="7fl-BS-S8b" id="x0R-Z2-uAX"/>
+                <outletCollection property="arrayItem" destination="LLb-lg-qiM" id="Kor-uu-X1c"/>
+                <outletCollection property="arrayItem" destination="BmN-Im-ScQ" id="1ET-Z6-ZsJ"/>
+                <outletCollection property="arrayItem" destination="6Ed-qo-Q8t" id="q5z-iZ-USh"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
