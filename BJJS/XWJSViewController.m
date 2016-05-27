@@ -60,7 +60,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 44;
+    return 10;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 89;
 }
 
 - (void)addItm {
@@ -83,6 +87,10 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return _dataArray.count;
 }
 
@@ -94,7 +102,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(XWJSViewControllerCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [cell setData:_dataArray[indexPath.row]];
+    [cell setData:_dataArray[indexPath.section]];
 
 }
 

@@ -11,15 +11,16 @@
 @implementation XWJSSJHederView
 
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame withTitleArray:(NSArray *)titlearr
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:@"主板编号" style:UIBarButtonItemStylePlain target:nil action:nil];
-        UIBarButtonItem *bar2 = [[UIBarButtonItem alloc]initWithTitle:@"主板密码" style:UIBarButtonItemStylePlain target:nil action:nil];
-        UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithTitle:@"到期日期" style:UIBarButtonItemStylePlain target:nil action:nil];
-        UIBarButtonItem *bar4 = [[UIBarButtonItem alloc]initWithTitle:@"出厂日期" style:UIBarButtonItemStylePlain target:nil action:nil];
+        UIBarButtonItem *bar1 = [[UIBarButtonItem alloc]initWithTitle:titlearr[0] style:UIBarButtonItemStylePlain target:nil action:nil];
+        UIBarButtonItem *bar2 = [[UIBarButtonItem alloc]initWithTitle:titlearr[1] style:UIBarButtonItemStylePlain target:nil action:nil];
+        UIBarButtonItem *bar3 = [[UIBarButtonItem alloc]initWithTitle:titlearr[2] style:UIBarButtonItemStylePlain target:nil action:nil];
+        UIBarButtonItem *bar4 = [[UIBarButtonItem alloc]initWithTitle:titlearr[3] style:UIBarButtonItemStylePlain target:nil action:nil];
         UIBarButtonItem *bar5 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        self.layer.borderColor = [UIColor clearColor].CGColor;
         self.items = @[ bar1, bar5, bar2,bar5, bar3, bar5, bar4];
     }
     return self;

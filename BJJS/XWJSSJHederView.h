@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface XWJSSJHederView : UIToolbar
-
+- (instancetype)initWithFrame:(CGRect)frame withTitleArray:(NSArray *)titlearr;
 @end

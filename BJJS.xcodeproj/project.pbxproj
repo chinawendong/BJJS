@@ -70,6 +70,9 @@
 		736EC65D1CC0820100496124 /* ShareSDKConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736EC6521CC0820000496124 /* ShareSDKConnector.framework */; };
 		736EC65F1CC0828400496124 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 736EC65E1CC0828400496124 /* MessageUI.framework */; };
 		7372EF7B1CC6108B00C0CDFD /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7372EF7A1CC6108B00C0CDFD /* TencentOpenAPI.framework */; };
+		737DD4131CF8356200E8FC74 /* AllTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 737DD4121CF8356200E8FC74 /* AllTableViewController.m */; };
+		737DD4161CF839DF00E8FC74 /* AllTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 737DD4151CF839DF00E8FC74 /* AllTableViewCell.m */; };
+		737DD4191CF8496C00E8FC74 /* XWActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 737DD4181CF8496C00E8FC74 /* XWActionSheet.m */; };
 		7383C2881CBCD6C2008329C9 /* SMS_SDK in Resources */ = {isa = PBXBuildFile; fileRef = 7383C2871CBCD6C2008329C9 /* SMS_SDK */; };
 		7383C28A1CBCD6FF008329C9 /* SMSSDKUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7383C2891CBCD6FF008329C9 /* SMSSDKUI.bundle */; };
 		7383C28C1CBCD751008329C9 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7383C28B1CBCD751008329C9 /* MOBFoundation.framework */; };
@@ -231,6 +234,12 @@
 		736EC6521CC0820000496124 /* ShareSDKConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKConnector.framework; sourceTree = "<group>"; };
 		736EC65E1CC0828400496124 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		7372EF7A1CC6108B00C0CDFD /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		737DD4111CF8356200E8FC74 /* AllTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllTableViewController.h; sourceTree = "<group>"; };
+		737DD4121CF8356200E8FC74 /* AllTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllTableViewController.m; sourceTree = "<group>"; };
+		737DD4141CF839DF00E8FC74 /* AllTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllTableViewCell.h; sourceTree = "<group>"; };
+		737DD4151CF839DF00E8FC74 /* AllTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllTableViewCell.m; sourceTree = "<group>"; };
+		737DD4171CF8496C00E8FC74 /* XWActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XWActionSheet.h; sourceTree = "<group>"; };
+		737DD4181CF8496C00E8FC74 /* XWActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XWActionSheet.m; sourceTree = "<group>"; };
 		7383C2871CBCD6C2008329C9 /* SMS_SDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SMS_SDK; sourceTree = "<group>"; };
 		7383C2891CBCD6FF008329C9 /* SMSSDKUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SMSSDKUI.bundle; sourceTree = "<group>"; };
 		7383C28B1CBCD751008329C9 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundation.framework; path = BJJS/SMS_SDK/MOBFoundation.framework; sourceTree = "<group>"; };
@@ -492,6 +501,12 @@
 		31D6A70F1C744B35005FBDFE /* SuoYouShiJu(所有数据界面) */ = {
 			isa = PBXGroup;
 			children = (
+				737DD4171CF8496C00E8FC74 /* XWActionSheet.h */,
+				737DD4181CF8496C00E8FC74 /* XWActionSheet.m */,
+				737DD4111CF8356200E8FC74 /* AllTableViewController.h */,
+				737DD4121CF8356200E8FC74 /* AllTableViewController.m */,
+				737DD4141CF839DF00E8FC74 /* AllTableViewCell.h */,
+				737DD4151CF839DF00E8FC74 /* AllTableViewCell.m */,
 				3100FD941C75C10300BD8C73 /* JieSuoViewController.h */,
 				3100FD951C75C10300BD8C73 /* JieSuoViewController.m */,
 				3100FD7D1C75C0D200BD8C73 /* MTCardLayout.h */,
@@ -850,6 +865,7 @@
 				3100FD901C75C0D200BD8C73 /* PassCell.m in Sources */,
 				7383C2B11CBCD8DC008329C9 /* SMS_HYZBadgeView.m in Sources */,
 				31D6A7201C744DE1005FBDFE /* AddNewViewController.m in Sources */,
+				737DD4191CF8496C00E8FC74 /* XWActionSheet.m in Sources */,
 				3100FDA81C76ED4C00BD8C73 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				3100FD8E1C75C0D200BD8C73 /* MTCollectionViewCardLayoutHelper.m in Sources */,
 				3192797C1CA8E1E200AD0E71 /* BJZLContentViewController.m in Sources */,
@@ -866,6 +882,7 @@
 				3100FD921C75C0D200BD8C73 /* UICollectionView+CardLayout.m in Sources */,
 				318D3D531C8FBE7500B765C8 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				31D6A7231C744EC1005FBDFE /* JieSuoView.m in Sources */,
+				737DD4161CF839DF00E8FC74 /* AllTableViewCell.m in Sources */,
 				3100FD9B1C75C18800BD8C73 /* LSCollectionViewHelper.m in Sources */,
 				7383C2BA1CBCD8DC008329C9 /* VerifyViewController.m in Sources */,
 				31D6A7151C744B78005FBDFE /* XWJSViewController.m in Sources */,
@@ -891,6 +908,7 @@
 				31D6A6C91C744961005FBDFE /* AppDelegate.m in Sources */,
 				31D6A6FF1C7449B8005FBDFE /* JieMa.m in Sources */,
 				31D674AB1CA92A5E008BA5C9 /* WebViewController.m in Sources */,
+				737DD4131CF8356200E8FC74 /* AllTableViewController.m in Sources */,
 				7383C2B91CBCD8DC008329C9 /* RegViewController.m in Sources */,
 				31D6A6C61C744961005FBDFE /* main.m in Sources */,
 				7383C2B61CBCD8DC008329C9 /* SMSUIVerificationCodeViewController.m in Sources */,

@@ -27,6 +27,8 @@
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKUI/ShareSDK+SSUI.h>
 
+#import "AllTableViewController.h"
+
 @interface XWScrollView : UIScrollView
 
 @property (nonatomic, strong)  NSTimer *timer;
@@ -349,8 +351,10 @@
 }
 
 - (void)add {
-   JieSuoViewController *xw = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CardViewController"];
-   [self pushViewController:xw];
+//   JieSuoViewController *xw = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CardViewController"];
+//   [self pushViewController:xw];
+   AllTableViewController *a = [[AllTableViewController alloc]init];
+   [self pushViewController:a];
 }
 
 - (void)select{

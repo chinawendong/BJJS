@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ProductClass;
 
 @interface AddNewViewControllerView : UIView
 
 @property (nonatomic, strong) NSArray *titleArray;
+@property (nonatomic, copy) NSString *sevaTitle;
+@property (nonnull, strong) ProductClass *obj;
 
 @end

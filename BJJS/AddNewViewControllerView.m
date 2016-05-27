@@ -27,6 +27,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *kefuName;
 @property (weak, nonatomic) IBOutlet UITextField *jiemirenyuan;
 @property (weak, nonatomic) IBOutlet UITextField *phoneNumber;
+@property (weak, nonatomic) IBOutlet UIButton *sevaButton;
 
 @end
 
@@ -40,7 +41,6 @@
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showBoy:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(hideBoy:) name:UIKeyboardWillHideNotification object:nil];
         [self addLabelAndTextFiled:array];
-        
     }
     return self;
 }
@@ -51,12 +51,21 @@
     if (self) {
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showBoy:) name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(hideBoy:) name:UIKeyboardWillHideNotification object:nil];
-
+        
     }
     return self;
 }
 
-
+- (void)setObj:(ProductClass *)obj {
+    _obj = obj;
+    _zhuBan.text = obj.productSerialNumber;
+    _miMa.text = obj.productPassword;
+    _shijian.text = obj.productDeliveryTime ;
+    _delegateObject.text = obj.productAgent;
+    _kefuName.text = obj.productServiceName;
+    _jiemirenyuan.text =  obj.productDecryptionPersonnel;
+    _phoneNumber.text = obj.productPhoneNumber;
+}
 
 - (void)addLabelAndTextFiled:(NSArray *)array {
     XWTextFiledScrollView *sc = [[XWTextFiledScrollView alloc]initWithFrame:self.frame];
@@ -136,38 +145,54 @@
     return YES;
 }
 
+- (void)setSevaTitle:(NSString *)sevaTitle {
+    [_sevaButton setTitle:sevaTitle forState:UIControlStateNormal];
+    _sevaTitle = sevaTitle;
+}
+
 - (IBAction)saveData:(id)sender {
-    [_arrayTextFiled enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        UITextField *t = obj;
-        [t resignFirstResponder];
-    }];
-    if (_zhuBan.text.length != 6 || _miMa.text.length != 6) {
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您输入的主板编号或者密码不正确" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"知道了~", nil];
-        [alertView show];
-        return;
+    if (!_sevaTitle.length) {
+        [_arrayTextFiled enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            UITextField *t = obj;
+            [t resignFirstResponder];
+        }];
+        if (_zhuBan.text.length != 6 || _miMa.text.length != 6) {
+            UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您输入的主板编号或者密码不正确" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"知道了~", nil];
+            [alertView show];
+            return;
+        }
+        ProductClass *p = [ProductClass new];
+        p.productSerialNumber = _zhuBan.text;
+        p.productPassword = _miMa.text;
+        p.productDeliveryTime = _shijian.text;
+        p.productAgent = _delegateObject.text;
+        p.productServiceName = _kefuName.text;
+        p.productDecryptionPersonnel = _jiemirenyuan.text;
+        p.productPhoneNumber = _phoneNumber.text;
+        p.dateOld = @"----";
+        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:p withAlerFlag:YES];
+    }else {
+        ProductClass *p = [ProductClass new];
+        p.productSerialNumber = _zhuBan.text;
+        p.productPassword = _miMa.text;
+        p.productDeliveryTime = _shijian.text;
+        p.productAgent = _delegateObject.text;
+        p.productServiceName = _kefuName.text;
+        p.productDecryptionPersonnel = _jiemirenyuan.text;
+        p.productPhoneNumber = _phoneNumber.text;
+        p.dateOld = _obj.dateOld;
+        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:p withAlerFlag:YES];
     }
-    
-    
-    ProductClass *p = [ProductClass new];
-    p.productSerialNumber = _zhuBan.text;
-    p.productPassword = _miMa.text;
-    p.productDeliveryTime = _shijian.text;
-    p.productAgent = _delegateObject.text;
-    p.productServiceName = _kefuName.text;
-    p.productDecryptionPersonnel = _jiemirenyuan.text;
-    p.productPhoneNumber = _phoneNumber.text;
-    p.dateOld = @"----";
-    [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:p withAlerFlag:YES];
 }
 
 
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect {
+ // Drawing code
+ }
+ */
 
 @end

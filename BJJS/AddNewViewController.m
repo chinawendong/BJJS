@@ -23,14 +23,21 @@
 - (void)loadView {
     NSArray* nibView =  [[NSBundle mainBundle] loadNibNamed:@"AddNewViewControllerView" owner:nil options:nil];
     AddNewViewControllerView *addView =[nibView objectAtIndex:0];
-//    [self.scrollView addSubview:addView];
+    addView.sevaTitle = self.sevaTitle;
+    if (_obj) {
+        addView.obj = _obj;
+    }
+    if (self.sevaTitle.length) {
+        self.title = @"修改用户信息";
+    }else {
+        self.title = @"添加新用户";
+    }
     self.view = addView;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = @"添加新用户";
     
 }
 

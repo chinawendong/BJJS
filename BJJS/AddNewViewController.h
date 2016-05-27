@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "ProductClass.h"
+
 @interface AddNewViewController : UIViewController
+@property (nonatomic, copy) NSString *sevaTitle;
+@property (nonnull, strong) ProductClass *obj;
 
 @end

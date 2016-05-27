@@ -13,6 +13,7 @@
 @interface XWJSViewControllerCell ()
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutletCollection(UIBarButtonItem) NSArray *arrayItem;
+@property (strong, nonatomic) IBOutletCollection(UIBarButtonItem) NSArray *arrayItem2;
 
 @end
 
@@ -44,6 +45,26 @@
                 break;
             case 3:
                 item.title = pr.productDeliveryTime.length ? pr.productDeliveryTime : [NSString stringWithFormat:@"-"];
+                break;
+            default:
+                break;
+        }
+    }];
+    
+    [self.arrayItem2 enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        UIBarButtonItem *item = (UIBarButtonItem *)obj;
+        switch (idx) {
+            case 0:
+                item.title = pr.productAgent;
+                break;
+            case 1:
+                item.title = pr.productServiceName;
+                break;
+            case 2:
+                item.title = pr.productDecryptionPersonnel;
+                break;
+            case 3:
+                item.title = pr.productPhoneNumber;
                 break;
             default:
                 break;

@@ -59,6 +59,7 @@
                                        @"INSERT INTO '%@' (%@) VALUES (%@)",tableName, [[MacroManger getObjectAddTabelObjectString:[objc class]]stringByReplacingOccurrencesOfString:@"text" withString:@""], [MacroManger getObjectAllValueWithObjc:objc]];
                 [db executeUpdate:insertSql1] ? ({flag ? [self popAlertView:@"添加数据成功"]:nil;}) : ({flag ? [self popAlertView:@"添加数据失败"]:nil;});
             }
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"status" object:nil];
         }
     }];
 }
