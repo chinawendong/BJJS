@@ -11,6 +11,7 @@
 #import "ProductClass.h"
 
 @interface XWJSViewControllerCell ()
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar2;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutletCollection(UIBarButtonItem) NSArray *arrayItem;
 @property (strong, nonatomic) IBOutletCollection(UIBarButtonItem) NSArray *arrayItem2;
@@ -70,6 +71,20 @@
                 break;
         }
     }];
+    
+    switch ([pr getCurrTime]) {
+        case XWDateOldStatueNone:
+            
+            break;
+        case XWDateOldStatueWillPast:
+        case XWDateOldStatueDidPast:
+            self.toolbar.barTintColor = [UIColor redColor];
+            self.toolbar2.barTintColor = [UIColor redColor];
+            
+            break;
+        default:
+            break;
+    }
 }
 
 @end

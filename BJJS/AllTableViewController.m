@@ -23,6 +23,7 @@
 #import "XWActionSheet.h"
 
 #import "AddNewViewController.h"
+#import "SearchViewController.h"
 
 
 @interface AllTableViewController ()<UITableViewDelegate, UITableViewDataSource>
@@ -45,7 +46,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self.tableView registerNib:[UINib nibWithNibName:@"XWJSViewControllerCell" bundle:nil] forCellReuseIdentifier:@"XWJSViewControllerCell"];
     self.tableView.tableFooterView = [UIView new];
-    
+    self.title = @"全部资料";
     self.dataArray = [NSMutableArray array];
     [self notification];
     [self.view addSubview:self.hederView];
@@ -59,6 +60,14 @@
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notification) name:@"status" object:nil];
     
+    UIBarButtonItem *item = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(search)];
+    self.navigationItem.rightBarButtonItem = item;
+    
+}
+
+- (void)search {
+     SearchViewController *searchViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchViewController"];
+    [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
 - (void)notification {

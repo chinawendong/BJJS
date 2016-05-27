@@ -69,6 +69,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="toolbar" destination="luU-Sn-Bwv" id="Tgk-YH-NfD"/>
+                <outlet property="toolbar2" destination="wNa-J4-076" id="ocI-ge-Nug"/>
                 <outletCollection property="arrayItem" destination="7fl-BS-S8b" id="x0R-Z2-uAX"/>
                 <outletCollection property="arrayItem" destination="LLb-lg-qiM" id="Kor-uu-X1c"/>
                 <outletCollection property="arrayItem" destination="BmN-Im-ScQ" id="1ET-Z6-ZsJ"/>
