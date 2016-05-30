@@ -9,6 +9,6 @@
 
 @interface SearchViewController : UIViewController
 @property (nonatomic, weak) id<SearchViewControllerDelegate> delegate;
-@property (nonatomic, strong) IBOutlet UISearchBar *searchBar;
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
+@property (nonatomic, strong)  UISearchBar *searchBar;
+@property (nonatomic, strong)  UITableView *tableView;
 @end

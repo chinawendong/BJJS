@@ -16,6 +16,8 @@
 
 #import <objc/runtime.h>
 
+#import "XWActionSheet.h"
+
 @implementation TheDatabaseManager
 
 + (void)addTabelWithObjectClass:(Class)cl andTableName:(NSString *)tableNmae {
@@ -36,52 +38,70 @@
     }];
 }
 
-+ (void)addObjectDataWithTableName:(NSString *)tableName installObject:(id)objc withAlerFlag:(BOOL)flag {
-    FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:kSQLPath];
-    [queue inDatabase:^(FMDatabase *db) {
-        if ([objc isKindOfClass:[ProductClass class]]) {
-            ProductClass *pc = objc;
-            NSString *paswod = [TheDatabaseManager searchFromTableName:JIESUOTABELNAME withKey:@"productSerialNumber" andObjece:pc.productSerialNumber];
-            if (paswod.length) {
-                if (flag) {
-                    [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE productSerialNumber = '%@'", tableName,pc.productSerialNumber]]? NSLog(@"删除成功") : nil;
-                    
-                    NSString *insertSql1= [NSString stringWithFormat:
-                                           @"INSERT INTO '%@' (%@) VALUES (%@)",tableName, [[MacroManger getObjectAddTabelObjectString:[objc class]]stringByReplacingOccurrencesOfString:@"text" withString:@""], [MacroManger getObjectAllValueWithObjc:objc]];
-                    [db executeUpdate:insertSql1] ? ({flag ? [self popAlertView:@"修改数据成功"]:nil;}) : ({flag ? [self popAlertView:@"修改数据失败"]:nil;});
-                }else {
-                    [db executeUpdate:[NSString stringWithFormat:@"UPDATE %@ SET %@ = '%@' WHERE %@ = '%@'", tableName,@"productPassword", @"111111",@"productSerialNumber", pc.productSerialNumber]]? ({flag? [self popAlertView:@"修改成功"]:nil;}) : ({flag? [self popAlertView:@"修改失败"]:nil;});
++ (void)addObjectDataWithTableName:(NSString *)tableName installObject:(id)objc oldObject:(id)object withAlerFlag:(BOOL)flag {
+    if ([objc isKindOfClass:[ProductClass class]]) {
+        ProductClass *pc = object;
+        FMDatabase *db = [FMDatabase databaseWithPath:kSQLPath];
+        NSArray *arr = [TheDatabaseManager searchFromTableName:JIESUOTABELNAME withKey:@"productSerialNumber" andObjece:pc.productSerialNumber];
+        NSArray *arr1 = [TheDatabaseManager searchFromTableName:JIESUOTABELNAME withKey:@"productSerialNumber" andObjece:[objc productSerialNumber]];
+        if ([db open]) {
+            if (arr.count) {
+                    if (flag) {
+                        [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE productSerialNumber = '%@'", tableName,pc.productSerialNumber]]? NSLog(@"删除成功") : nil;
+                        if (arr1.count) {
+                            [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE productSerialNumber = '%@'", tableName,[objc productSerialNumber]]]? NSLog(@"删除成功") : nil;
+                        }
+                        
+                        NSString *insertSql1= [NSString stringWithFormat:
+                                               @"INSERT INTO '%@' (%@) VALUES (%@)",tableName, [[MacroManger getObjectAddTabelObjectString:[objc class]]stringByReplacingOccurrencesOfString:@"text" withString:@""], [MacroManger getObjectAllValueWithObjc:objc]];
+                        [db executeUpdate:insertSql1] ? ({flag ? [self popAlertView:@"修改数据成功"]:nil;}) : ({flag ? [self popAlertView:@"修改数据失败"]:nil;});
+                    }
+            }else {
+                if (arr1.count) {
+                    [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE productSerialNumber = '%@'", tableName,[objc productSerialNumber]]]? NSLog(@"删除成功") : nil;
                 }
-                
-                
-            }else{
+
                 NSString *insertSql1= [NSString stringWithFormat:
                                        @"INSERT INTO '%@' (%@) VALUES (%@)",tableName, [[MacroManger getObjectAddTabelObjectString:[objc class]]stringByReplacingOccurrencesOfString:@"text" withString:@""], [MacroManger getObjectAllValueWithObjc:objc]];
                 [db executeUpdate:insertSql1] ? ({flag ? [self popAlertView:@"添加数据成功"]:nil;}) : ({flag ? [self popAlertView:@"添加数据失败"]:nil;});
             }
-            [[NSNotificationCenter defaultCenter]postNotificationName:@"status" object:nil];
+
+            }
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"status" object:nil];
         }
-    }];
 }
 
 + (void)delectWithProperty:(NSString *)property andProperty:(NSString *)p withTableName:(NSString *)tableName {
-    FMDatabaseQueue *queue = [FMDatabaseQueue databaseQueueWithPath:kSQLPath];
-    [queue inDatabase:^(FMDatabase *db) {
+    FMDatabase *db = [FMDatabase databaseWithPath:kSQLPath];
+    if ([db open]) {
         [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE %@ = %@", tableName, property, p]]? NSLog(@"删除成功") : nil;
-    }];
+    }
+    
 }
 
-+ (NSString *)searchFromTableName:(NSString *)tableName withKey:(NSString *)key andObjece:(NSString *)nekey {
++ (NSArray *)searchFromTableName:(NSString *)tableName withKey:(NSString *)key andObjece:(NSString *)nekey {
     FMDatabase *db = [FMDatabase databaseWithPath:kSQLPath];
     if ([db open]) {
         //SELECT %@ FROM %@ WHERE name like '%@'",condition
         NSString *query = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE %@ LIKE '%%%@%%'",tableName,key,nekey];
         FMResultSet * rs = [db executeQuery:query];
-        NSString * name = nil;
+        NSMutableArray *arr = [NSMutableArray array];
         while ([rs next]) {
-            name = [rs stringForColumn:@"productPassword"];
+            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+            NSArray *array = [[self getClassProtrName:[ProductClass class] andString:@""] componentsSeparatedByString:@" ,"];
+            [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                dic[obj] = [rs stringForColumn:obj];
+                NSLog(@"%@", dic[obj]);
+            }];
+            @autoreleasepool {
+                id user = [[ProductClass alloc]init];
+                [user setValuesForKeysWithDictionary:dic];
+                [arr addObject:user];
+            }
+            
         }
-        return name;
+        
+        return arr;
     }
     return nil;
 }
@@ -133,37 +153,37 @@
             }
         }
         
-//        NSString *query2 = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE productServiceName LIKE '%%%@%%'",listName,conditions2];
-//        FMResultSet * rs2 = [db executeQuery:query2];
-//        while ([rs2 next]) {
-//            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//            NSArray *array = [[selfBlock getClassProtrName:cl andString:@""] componentsSeparatedByString:@" ,"];
-//            [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//                dic[obj] = [rs stringForColumn:obj];
-//            }];
-//            @autoreleasepool {
-//                id user = [[cl alloc]init];
-//                [user setValuesForKeysWithDictionary:dic];
-//                [arr addObject:user];
-//            }
-//            
-//        }
-//        
-//        NSString *query3 = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE productAgent LIKE '%%%@%%'",listName,conditions3];
-//        FMResultSet * rs3 = [db executeQuery:query3];
-//        while ([rs3 next]) {
-//            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-//            NSArray *array = [[selfBlock getClassProtrName:cl andString:@""] componentsSeparatedByString:@" ,"];
-//            [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//                dic[obj] = [rs stringForColumn:obj];
-//            }];
-//            @autoreleasepool {
-//                id user = [[cl alloc]init];
-//                [user setValuesForKeysWithDictionary:dic];
-//                [arr addObject:user];
-//            }
-//            
-//        }
+        //        NSString *query2 = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE productServiceName LIKE '%%%@%%'",listName,conditions2];
+        //        FMResultSet * rs2 = [db executeQuery:query2];
+        //        while ([rs2 next]) {
+        //            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        //            NSArray *array = [[selfBlock getClassProtrName:cl andString:@""] componentsSeparatedByString:@" ,"];
+        //            [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        //                dic[obj] = [rs stringForColumn:obj];
+        //            }];
+        //            @autoreleasepool {
+        //                id user = [[cl alloc]init];
+        //                [user setValuesForKeysWithDictionary:dic];
+        //                [arr addObject:user];
+        //            }
+        //
+        //        }
+        //
+        //        NSString *query3 = [NSString stringWithFormat:@"SELECT * FROM %@ WHERE productAgent LIKE '%%%@%%'",listName,conditions3];
+        //        FMResultSet * rs3 = [db executeQuery:query3];
+        //        while ([rs3 next]) {
+        //            NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+        //            NSArray *array = [[selfBlock getClassProtrName:cl andString:@""] componentsSeparatedByString:@" ,"];
+        //            [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        //                dic[obj] = [rs stringForColumn:obj];
+        //            }];
+        //            @autoreleasepool {
+        //                id user = [[cl alloc]init];
+        //                [user setValuesForKeysWithDictionary:dic];
+        //                [arr addObject:user];
+        //            }
+        //
+        //        }
         block(arr);
     }];
 }

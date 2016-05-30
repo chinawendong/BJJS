@@ -171,9 +171,14 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textFields {
    [textFields resignFirstResponder];
-   [JieMa getParsswordWithString:[textField.text stringByReplacingOccurrencesOfString:@" " withString:@""] withDateBlock:^(NSString *str, NSString *string) {
+   [JieMa getParsswordWithString:[textField.text stringByReplacingOccurrencesOfString:@" " withString:@""] withDateBlock:^(NSString *str, NSString *string, ProductClass *obj) {
       daohuoshijian.text = str;
       jiesuoma.text =  string;
+      if (obj) {
+         dailishang.text = [NSString stringWithFormat:@"代理商:%@", obj.productAgent];
+         yonghu.text =  [NSString stringWithFormat:@"用户:%@", obj.productServiceName];
+         chuhuoshijian.text =  [NSString stringWithFormat:@"出货日期:%@", obj.productDeliveryTime];
+      }
    }];
    return YES;
 }
@@ -182,7 +187,12 @@
    if ([textFields.text stringByReplacingOccurrencesOfString:@" " withString:@""].length + 1 == 15 && ![string isEqualToString:@" "] && string.length) {
       [textFields resignFirstResponder];
 
-      [JieMa getParsswordWithString:[NSString stringWithFormat:@"%@%@", [textFields.text stringByReplacingOccurrencesOfString:@" " withString:@""],string] withDateBlock:^(NSString *str, NSString *string) {
+      [JieMa getParsswordWithString:[NSString stringWithFormat:@"%@%@", [textFields.text stringByReplacingOccurrencesOfString:@" " withString:@""],string] withDateBlock:^(NSString *str, NSString *string,ProductClass *obj) {
+         if (obj) {
+            dailishang.text = [NSString stringWithFormat:@"代理商:%@", obj.productAgent];
+            yonghu.text =  [NSString stringWithFormat:@"用户:%@", obj.productServiceName];
+            chuhuoshijian.text =  [NSString stringWithFormat:@"出货日期:%@", obj.productDeliveryTime];
+         }
          daohuoshijian.text = str;
          jiesuoma.text =  string;
       }];
@@ -354,6 +364,7 @@
 //   JieSuoViewController *xw = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CardViewController"];
 //   [self pushViewController:xw];
    AllTableViewController *a = [[AllTableViewController alloc]init];
+
    [self pushViewController:a];
 }
 

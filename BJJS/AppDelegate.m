@@ -29,6 +29,8 @@
 //微信SDK头文件
 #import "WXApi.h"
 
+#import "JieMa.h"
+
 @interface AppDelegate ()
 
 @end
@@ -128,7 +130,7 @@
                  break;
          }
      }];
-    
+        
     return YES;
 }
 

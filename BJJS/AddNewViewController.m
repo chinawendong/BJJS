@@ -23,7 +23,11 @@
 - (void)loadView {
     NSArray* nibView =  [[NSBundle mainBundle] loadNibNamed:@"AddNewViewControllerView" owner:nil options:nil];
     AddNewViewControllerView *addView =[nibView objectAtIndex:0];
-    addView.sevaTitle = self.sevaTitle;
+    if (_sevaTitle.length) {
+        addView.sevaTitle = self.sevaTitle;
+    }else {
+        addView.sevaTitle = @"提交";
+    }
     if (_obj) {
         addView.obj = _obj;
     }

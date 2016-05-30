@@ -43,11 +43,11 @@
 
 @end
 
-@interface XWActionSheet ()
+@interface XWActionSheet ()<UIAlertViewDelegate>
 
 @property (nonatomic, strong) UIView *bigView;
 @property (nonatomic) CGFloat count;
-
+@property (nonatomic,strong) UIAlertView *al;
 @end
 
 @implementation XWActionSheet
@@ -117,6 +117,24 @@
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
+}
+
+- (instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message cancelButtonTitle:(nullable NSString *)cancelButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ... {
+    self = [super init];
+    if (self) {
+        self.al = [[UIAlertView alloc]initWithTitle:title message:message delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles:otherButtonTitles,nil];
+    }
+    return self;
+}
+
+- (void)showAlertView {
+    [self.al show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex  {
+    if (_idxBlock) {
+        _idxBlock(buttonIndex);
+    }
 }
 
 /*

@@ -31,13 +31,28 @@ static const int mabiao7[] = {9,1,0,7,6,3,4,5,2,8};
 static const int mabiao8[] = {3,0,5,8,2,7,1,6,9,4};
 static const int mabiao9[] = {0,8,7,9,4,1,5,3,6,2};
 
-@interface JieMa ()<UIAlertViewDelegate>
-
+@interface JieMa ()<UIAlertViewDelegate>{
+   
+    
+}
+@property (nonatomic,copy)  NSString *deadlineDate;
+@property (nonatomic,copy) NSString *productSerialNumber;
+@property (nonatomic,copy) NSString *string;
 @property (nonatomic,copy) void (^jieMaBlock)();
+@property (nonatomic,copy) void (^block)(NSString *a,NSString *b,ProductClass *obj);
 
 @end
 
 @implementation JieMa
+
++ (instancetype)shaerJieMa {
+    static JieMa *jiema;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        jiema = [self new];
+    });
+    return jiema;
+}
 
 int GetInt(int x, int y) {
     int k;
@@ -174,66 +189,88 @@ NSArray * Getdate(NSArray * arr) {
 }
 
 //获取密码和时间
-+ (void)getParsswordWithString:(NSString *)string withDateBlock:(void(^)(NSString *a,NSString *b))blcok {
++ (void)getParsswordWithString:(NSString *)string withDateBlock:(void(^)(NSString *a,NSString *b, ProductClass *obj))blcok {
     if (string.length != 15) {
         [self popAlertView:@"请检查输入是否有误"];
         return ;
     }
-    
+    JieMa *m = [JieMa shaerJieMa];
+    m.string = string;
     //到期时间
-    NSString *deadlineDate = [self getDate:string];
+    m.deadlineDate = [self getDate:string];
     
     //主板编号
-    NSString *productSerialNumber = [string substringWithRange:NSMakeRange(6, 6)];
+    m.productSerialNumber = [string substringWithRange:NSMakeRange(6, 6)];
     
     //查询是否存在
-    NSString *paswod = [TheDatabaseManager searchFromTableName:JIESUOTABELNAME withKey:@"productSerialNumber" andObjece:productSerialNumber];
-    
-    if (paswod.length) {
-        
-        blcok([NSString stringWithFormat:@"到期时间: %@", deadlineDate],[NSString stringWithFormat:@"解锁码: %@ %@ %@", [[self stringWithText:[string stringByReplacingOccurrencesOfString:productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(0, 3)], [[self stringWithText:[string stringByReplacingOccurrencesOfString:productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(3, 4)],[[self stringWithText:[string stringByReplacingOccurrencesOfString:productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(6, 3)]]);
-        ProductClass *p = [ProductClass new];
-        p.productSerialNumber = productSerialNumber;
-        p.dateOld = deadlineDate;
-        [TheDatabaseManager update:JIESUOTABELNAME installObject:p];
-        
+    NSArray *p = [TheDatabaseManager searchFromTableName:JIESUOTABELNAME withKey:@"productSerialNumber" andObjece:m.productSerialNumber];
+    if (p.count) {
+        ProductClass *p1 = p.firstObject;
+        NSString *paswod = p1.productPassword;
+        if (paswod.length) {
+            blcok([NSString stringWithFormat:@"到期时间: %@", m.deadlineDate],[NSString stringWithFormat:@"解锁码: %@ %@ %@", [[self stringWithText:[string stringByReplacingOccurrencesOfString:m.productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(0, 3)], [[self stringWithText:[string stringByReplacingOccurrencesOfString:m.productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(3, 4)],[[self stringWithText:[string stringByReplacingOccurrencesOfString:m.productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(6, 3)]],p1);
+            ProductClass *p = [ProductClass new];
+            p.productSerialNumber = m.productSerialNumber;
+            p.dateOld = m.deadlineDate;
+            [TheDatabaseManager update:JIESUOTABELNAME installObject:p];
+            
+        }else {
+            UIAlertView *al = [[UIAlertView alloc]initWithTitle:m.productSerialNumber message:@"对应密码:" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            al.alertViewStyle = UIAlertViewStyleSecureTextInput;
+            al.tag = 1000001;
+            al.delegate = [JieMa shaerJieMa];
+            [al show];
+            [JieMa shaerJieMa].block = blcok;
+        }
     }else {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            WXPayView *view = [[WXPayView alloc] initWithMoney:productSerialNumber  cardMessage:@"上海滨捷机电有限公司." completion:^(NSString *password) {
-//                NSLog(@"输入的密码是%@",password); // 密码输入完成回调
-                ProductClass *pc = [ProductClass new];
-                pc.productPassword = password;
-                pc.productSerialNumber = productSerialNumber;
-                pc.dateOld = deadlineDate;
-                [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:pc withAlerFlag:NO];
-                [TheDatabaseManager quaueupdataList:JIESUOTABELNAME andProperString:nil withSteing:nil andNewString:nil andClass:[ProductClass class] withBlock:^(NSArray *arr) {
-                }];
-                blcok([NSString stringWithFormat:@"到期时间: %@", deadlineDate],[NSString stringWithFormat:@"解锁码: %@ %@ %@", [[self stringWithText:[string stringByReplacingOccurrencesOfString:productSerialNumber withString:password]]substringWithRange:NSMakeRange(0, 3)], [[self stringWithText:[string stringByReplacingOccurrencesOfString:productSerialNumber withString:password]]substringWithRange:NSMakeRange(3, 4)],[[self stringWithText:[string stringByReplacingOccurrencesOfString:productSerialNumber withString:password]]substringWithRange:NSMakeRange(6, 3)]]);
-            }];
-            __weak WXPayView *weakView = view;
-            view.exitBtnClicked = ^{ // 点击了退出按钮
-                [weakView hidden];
-            };
-            
-            
-            [view show];
-        });
-        
-        
-//        return nil;
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:m.productSerialNumber message:@"对应密码:" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        al.alertViewStyle = UIAlertViewStyleSecureTextInput;
+        al.tag = 1000001;
+        al.delegate = [JieMa shaerJieMa];
+        [al show];
+        [JieMa shaerJieMa].block = blcok;
     }
    
 }
 
 + (void)popAlertView:(NSString *)str {
     UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"小提示" message:str delegate:nil cancelButtonTitle:nil otherButtonTitles:@"重新输入~", nil];
-    al.delegate = self;
+    [al show];
+}
+
++ (void)popAlertView2:(NSString *)str {
+    UIAlertView *al = [[UIAlertView alloc]initWithTitle:@"小提示" message:str delegate:nil cancelButtonTitle:nil otherButtonTitles:@"重新输入~", nil];
+    al.tag = 10002;
+    al.delegate = [self shaerJieMa];
     [al show];
 }
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    
+    if (alertView.tag == 1000001 && buttonIndex) {
+        NSString *string = [alertView textFieldAtIndex:0].text;
+        if (string.length < 6) {
+            [JieMa popAlertView2:@"密码格式不正确"];
+            return;
+        }
+        ProductClass *pc = [ProductClass new];
+        pc.productPassword = string;
+        pc.productSerialNumber = self.productSerialNumber;
+        pc.dateOld = self.deadlineDate;
+        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:pc oldObject:nil withAlerFlag:NO];
+        [TheDatabaseManager quaueupdataList:JIESUOTABELNAME andProperString:nil withSteing:nil andNewString:nil andClass:[ProductClass class] withBlock:^(NSArray *arr) {
+        }];
+        NSString *s = [NSString stringWithFormat:@"解锁码: %@ %@ %@", [[JieMa stringWithText:[_string stringByReplacingOccurrencesOfString:self.productSerialNumber withString:string]]substringWithRange:NSMakeRange(0, 2)], [[JieMa stringWithText:[_string stringByReplacingOccurrencesOfString:self.productSerialNumber withString:string]]substringWithRange:NSMakeRange(2, 4)],[[JieMa stringWithText:[_string stringByReplacingOccurrencesOfString:self.productSerialNumber withString:string]]substringWithRange:NSMakeRange(6, 4)]];
+        self.block([NSString stringWithFormat:@"到期时间: %@", self.deadlineDate],s,nil);
+    }
+    if (alertView.tag == 10002) {
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:self.productSerialNumber message:@"对应密码:" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        al.alertViewStyle = UIAlertViewStyleSecureTextInput;
+        al.tag = 1000001;
+        al.delegate = [JieMa shaerJieMa];
+        [al show];
+
+    }
 }
 
 @end

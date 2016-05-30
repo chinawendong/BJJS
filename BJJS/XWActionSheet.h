@@ -11,7 +11,8 @@
 @interface XWActionSheet : UIView
 
 @property (nonatomic, copy) void (^idxBlock)(NSInteger idx);
-
+- (instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message cancelButtonTitle:(nullable NSString *)cancelButtonTitle otherButtonTitles:(nullable NSString *)otherButtonTitles, ...;
 - (id)initWithTitleArray:(NSArray *)titleArray;
 - (void)show;
+- (void)showAlertView;
 @end

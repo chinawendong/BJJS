@@ -295,7 +295,7 @@
         [_dataArray removeObjectAtIndex:idx];
         [_dataArray insertObject:newP atIndex:idx];
         [cell setData:newP];
-        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:newP withAlerFlag:YES];
+        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:newP oldObject:cell.productObject withAlerFlag:YES];
     }
 }
 

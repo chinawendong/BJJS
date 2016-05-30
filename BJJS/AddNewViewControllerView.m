@@ -151,7 +151,7 @@
 }
 
 - (IBAction)saveData:(id)sender {
-    if (!_sevaTitle.length) {
+    if ([_sevaTitle isEqualToString:@"提交"]) {
         [_arrayTextFiled enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             UITextField *t = obj;
             [t resignFirstResponder];
@@ -169,8 +169,8 @@
         p.productServiceName = _kefuName.text;
         p.productDecryptionPersonnel = _jiemirenyuan.text;
         p.productPhoneNumber = _phoneNumber.text;
-        p.dateOld = @"----";
-        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:p withAlerFlag:YES];
+        p.dateOld = @"    ";
+        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:p oldObject:nil withAlerFlag:YES];
     }else {
         ProductClass *p = [ProductClass new];
         p.productSerialNumber = _zhuBan.text;
@@ -181,7 +181,7 @@
         p.productDecryptionPersonnel = _jiemirenyuan.text;
         p.productPhoneNumber = _phoneNumber.text;
         p.dateOld = _obj.dateOld;
-        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:p withAlerFlag:YES];
+        [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:p oldObject:_obj withAlerFlag:YES];
     }
 }
 

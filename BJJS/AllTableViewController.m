@@ -65,8 +65,10 @@
     
 }
 
+
+
 - (void)search {
-     SearchViewController *searchViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SearchViewController"];
+     SearchViewController *searchViewController = [[SearchViewController alloc]init];
     [self.navigationController pushViewController:searchViewController animated:YES];
 }
 
@@ -150,7 +152,7 @@
             {
                 ProductClass *p = _dataArray[indexPath.section];
                 [TheDatabaseManager delectWithProperty:@"productSerialNumber" andProperty:p.productSerialNumber withTableName:JIESUOTABELNAME];
-                [self.dataArray removeObjectAtIndex:indexPath.item];
+                [self.dataArray removeObjectAtIndex:indexPath.section];
                 [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
             }
                 break;

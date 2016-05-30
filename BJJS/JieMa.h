@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-
+@class ProductClass;
 @interface JieMa : NSObject
 
 + (NSString *)stringWithText:(NSString *)string;
 + (NSString *)getDate:(NSString *)string;
 
-+ (void)getParsswordWithString:(NSString *)string withDateBlock:(void(^)(NSString *a,NSString *b))blcok;
++ (void)getParsswordWithString:(NSString *)string withDateBlock:(void(^)(NSString *a,NSString *b, ProductClass *obj))blcok;
 @end

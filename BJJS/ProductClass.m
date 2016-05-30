@@ -25,7 +25,7 @@
 
 - (NSString *)dateOld {
     if ([_dateOld isEqualToString:@"(null)"] || !_dateOld.length) {
-        _dateOld = @"----";
+        _dateOld = @"    ";
     }
 //    [self getCurrTime:nil];
     return _dateOld;
@@ -33,28 +33,28 @@
 
 - (NSString *)productAgent {
     if ([_productAgent isEqualToString:@"(null)"] || !_productAgent.length) {
-        _productAgent = @"----";
+        _productAgent = @"    ";
     }
     return _productAgent;
 }
 
 - (NSString *)productServiceName {
     if ([_productServiceName isEqualToString:@"(null)"] || !_productServiceName.length) {
-        _productServiceName = @"----";
+        _productServiceName = @"    ";
     }
     return _productServiceName;
 }
 
 - (NSString *)productDecryptionPersonnel {
     if ([_productDecryptionPersonnel isEqualToString:@"(null)"] || !_productDecryptionPersonnel.length) {
-        _productDecryptionPersonnel = @"----";
+        _productDecryptionPersonnel = @"    ";
     }
     return _productDecryptionPersonnel;
 }
 
 - (NSString *)productPhoneNumber {
     if ([_productPhoneNumber isEqualToString:@"(null)"] || !_productPhoneNumber.length) {
-        _productPhoneNumber = @"----";
+        _productPhoneNumber = @"    ";
     }
     return _productPhoneNumber;
 }
@@ -65,7 +65,7 @@
 
 - (NSString *)productDeliveryTime {
     if ([_productDeliveryTime isEqualToString:@"(null)"] || !_productDeliveryTime.length) {
-        _productDeliveryTime = @"----";
+        _productDeliveryTime = @"    ";
     }
     return _productDeliveryTime;
 }

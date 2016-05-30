@@ -138,5 +138,8 @@
     return _cover;
 }
 
+- (void)dealloc {
+    
+}
 
 @end
