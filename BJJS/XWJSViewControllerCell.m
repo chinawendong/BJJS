@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutletCollection(UIBarButtonItem) NSArray *arrayItem;
 @property (strong, nonatomic) IBOutletCollection(UIBarButtonItem) NSArray *arrayItem2;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end
 
@@ -74,17 +75,20 @@
     
     switch ([pr getCurrTime]) {
         case XWDateOldStatueNone:
-            
+            _statusLabel.text = @" ";
             break;
         case XWDateOldStatueWillPast:
+            _statusLabel.textColor = [UIColor redColor];
+            _statusLabel.text = @"即将过期";
+            break;
         case XWDateOldStatueDidPast:
-            self.toolbar.barTintColor = [UIColor redColor];
-            self.toolbar2.barTintColor = [UIColor redColor];
-            
+            _statusLabel.textColor = [UIColor redColor];
+            _statusLabel.text = @"已经过期";
             break;
         default:
             break;
     }
+//    [self.contentView bringSubviewToFront:self.statusLabel];
 }
 
 @end

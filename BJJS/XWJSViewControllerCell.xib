@@ -57,17 +57,31 @@
                         </items>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </toolbar>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已过期5天" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F9v-Cz-KG8">
+                        <rect key="frame" x="0.0" y="33" width="320" height="21"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Rwi-yA-4Jr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="luU-Sn-Bwv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="9H6-bK-tNF"/>
-                    <constraint firstItem="wNa-J4-076" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="DuO-42-wbg"/>
-                    <constraint firstItem="luU-Sn-Bwv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="LmX-gQ-xZc"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="wNa-J4-076" secondAttribute="trailing" constant="-8" id="hmE-iq-udR"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="luU-Sn-Bwv" secondAttribute="trailing" constant="-8" id="qlH-wt-3x6"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="wNa-J4-076" secondAttribute="bottom" constant="-8" id="thO-u8-a4t"/>
+                    <constraint firstItem="luU-Sn-Bwv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="3gs-cD-YR7"/>
+                    <constraint firstItem="luU-Sn-Bwv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="H8J-eu-vI0"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="F9v-Cz-KG8" secondAttribute="trailing" constant="-8" id="Rad-pL-lpp"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="luU-Sn-Bwv" secondAttribute="trailing" constant="-8" id="X9S-pk-eqc"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="wNa-J4-076" secondAttribute="trailing" constant="-8" id="gok-2C-vI6"/>
+                    <constraint firstItem="F9v-Cz-KG8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="25" id="n2a-is-HCB"/>
+                    <constraint firstItem="F9v-Cz-KG8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="nsi-YW-ECd"/>
+                    <constraint firstItem="wNa-J4-076" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="rzO-bj-izu"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="wNa-J4-076" secondAttribute="bottom" constant="-8" id="vRc-Rc-XUY"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="statusLabel" destination="F9v-Cz-KG8" id="eiA-SI-99r"/>
                 <outlet property="toolbar" destination="luU-Sn-Bwv" id="Tgk-YH-NfD"/>
                 <outlet property="toolbar2" destination="wNa-J4-076" id="ocI-ge-Nug"/>
                 <outletCollection property="arrayItem" destination="7fl-BS-S8b" id="x0R-Z2-uAX"/>

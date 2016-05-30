@@ -73,12 +73,7 @@
 }
 
 - (void)notification {
-    __weak typeof(self) weakBlock = self;
-
-    [TheDatabaseManager quaueupdataList:JIESUOTABELNAME andProperString:nil withSteing:nil andNewString:nil andClass:[ProductClass class] withBlock:^(NSArray *arr) {
-        weakBlock.dataArray = arr.mutableCopy;
-        [weakBlock.tableView reloadData];
-    }];
+    [self addItm];
 }
 
 - (UIView *)hederView {
@@ -110,11 +105,35 @@
     NSInteger count = _dataArray.count;
     [_dataArray removeAllObjects];
     [TheDatabaseManager quaueupdataList:JIESUOTABELNAME andProperString:nil withSteing:nil andNewString:nil andClass:[ProductClass class] withBlock:^(NSArray *arr) {
-        weakBlock.dataArray = arr.mutableCopy;
+        NSMutableArray *array = [self compareArray:arr];
+        [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            ProductClass *p = obj;
+            if ([p getCurrTime] == XWDateOldStatueDidPast || [p getCurrTime] == XWDateOldStatueWillPast) {
+                [array removeObject:p];
+                [array insertObject:p atIndex:0];
+            }
+        }];
+        weakBlock.dataArray = array.mutableCopy;
         if (_dataArray.count != count) {
             [weakBlock.tableView reloadData];
         }
     }];
+}
+
+- (NSMutableArray *)compareArray:(NSArray *)compareArray {
+    return [compareArray sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        ProductClass *text1 = obj1;
+        ProductClass *text2 = obj2;
+        NSInteger flat1 = [[text1.productSerialNumber substringToIndex:1] integerValue];
+        NSInteger flat2= [[text2.productSerialNumber substringToIndex:1] integerValue];
+        if (flat1 < flat2) {
+            return NSOrderedAscending;
+        }
+        if (flat1 == flat2) {
+            return NSOrderedSame;
+        }
+        return NSOrderedDescending;
+    }].mutableCopy;
 }
 
 - (void)didReceiveMemoryWarning {
