@@ -91,7 +91,7 @@
             NSArray *array = [[self getClassProtrName:[ProductClass class] andString:@""] componentsSeparatedByString:@" ,"];
             [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 dic[obj] = [rs stringForColumn:obj];
-                NSLog(@"%@", dic[obj]);
+//                NSLog(@"%@", dic[obj]);
             }];
             @autoreleasepool {
                 id user = [[ProductClass alloc]init];
@@ -120,7 +120,7 @@
             NSArray *array = [[selfBlock getClassProtrName:cl andString:@""] componentsSeparatedByString:@" ,"];
             [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 dic[obj] = [rs stringForColumn:obj];
-                NSLog(@"%@", dic[obj]);
+//                NSLog(@"%@", dic[obj]);
             }];
             @autoreleasepool {
                 id user = [[cl alloc]init];
@@ -197,8 +197,6 @@
         //获取属性名字
         const char * name = property_getName(property);
         [sqlStr appendString:[NSString stringWithFormat:@"%s %@,", name, str]];
-        //        //获取属性类型
-        //        const char * attributes = property_getAttributes(property);
     }
     free(properties);
     return [sqlStr substringToIndex:sqlStr.length - 2];
