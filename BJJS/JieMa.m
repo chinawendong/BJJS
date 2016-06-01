@@ -168,6 +168,7 @@ NSArray * Getdate(NSArray * arr) {
                 } else if (flag == 1) {
                     [mimaString appendFormat:@"%@%@%@%@%@%@%@%@%@%@",iell[2], ie[3] , ie[1], ie[2],iell[0], ie[5], iell[1], ie[0], iell[3],ie[4]];
                 }
+    NSLog(@"%@ : 解锁码:%@", string,mimaString);
     return mimaString;
 }
 
@@ -185,8 +186,10 @@ NSArray * Getdate(NSArray * arr) {
     [dateFormatter setDateFormat:@"yyyyMMdd"];
     //用[NSDate date]可以获取系统当前时间
     NSString *currentDateStr = [dateFormatter stringFromDate:date];
+    
     return currentDateStr;
 }
+
 
 //获取密码和时间
 + (void)getParsswordWithString:(NSString *)string withDateBlock:(void(^)(NSString *a,NSString *b, ProductClass *obj))blcok {
@@ -201,14 +204,21 @@ NSArray * Getdate(NSArray * arr) {
     
     //主板编号
     m.productSerialNumber = [string substringWithRange:NSMakeRange(6, 6)];
-    
+    NSLog(@"___________%@ %@", string,m.deadlineDate);
     //查询是否存在
     NSArray *p = [TheDatabaseManager searchFromTableName:JIESUOTABELNAME withKey:@"productSerialNumber" andObjece:m.productSerialNumber];
     if (p.count) {
         ProductClass *p1 = p.firstObject;
         NSString *paswod = p1.productPassword;
         if (paswod.length) {
-            blcok([NSString stringWithFormat:@"到期时间: %@", m.deadlineDate],[NSString stringWithFormat:@"解锁码: %@ %@ %@", [[self stringWithText:[string stringByReplacingOccurrencesOfString:m.productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(0, 3)], [[self stringWithText:[string stringByReplacingOccurrencesOfString:m.productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(3, 4)],[[self stringWithText:[string stringByReplacingOccurrencesOfString:m.productSerialNumber withString:paswod]]substringWithRange:NSMakeRange(6, 3)]],p1);
+            NSString *newSteing = [JieMa stringWithText:[m.string stringByReplacingOccurrencesOfString:m.productSerialNumber withString:paswod]];
+            NSString *fistr = [newSteing substringWithRange:NSMakeRange(0, 2)];
+            NSString *two = [newSteing substringWithRange:NSMakeRange(2, 4)];
+            NSString *three = [newSteing substringWithRange:NSMakeRange(6, 4)];
+            
+            NSString *s = [NSString stringWithFormat:@"解锁码: %@ %@ %@", fistr,two,three];
+            
+            blcok([NSString stringWithFormat:@"到期时间: %@", m.deadlineDate],s,p1);
             ProductClass *p = [ProductClass new];
             p.productSerialNumber = m.productSerialNumber;
             p.dateOld = m.deadlineDate;
