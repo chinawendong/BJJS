@@ -730,7 +730,7 @@
 				TargetAttributes = {
 					31D6A6C01C744961005FBDFE = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = 6GMAX85SJ3;
+						DevelopmentTeam = P6G2LEKEPT;
 					};
 					31D6A6D91C744961005FBDFE = {
 						CreatedOnToolsVersion = 7.2;
@@ -1055,7 +1055,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiamen Pop Web Co., Ltd. (P6G2LEKEPT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BJJS/SMS_SDK",
@@ -1071,6 +1071,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BJJS/ShareSDK/Support/PlatformSDK/WeChatSDK",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = wenzhongbin.com.BJJS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -1082,7 +1083,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiamen Pop Web Co., Ltd. (P6G2LEKEPT)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BJJS/SMS_SDK",
@@ -1098,6 +1099,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/BJJS/ShareSDK/Support/PlatformSDK/WeChatSDK",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = wenzhongbin.com.BJJS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

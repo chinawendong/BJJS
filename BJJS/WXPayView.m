@@ -86,7 +86,7 @@
 
 - (void)show{
     
-    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    UIWindow *window = [UIApplication sharedApplication].keyWindow;
     self.hidden = NO;
     self.cover.hidden = NO;
     [window addSubview:self.cover];
