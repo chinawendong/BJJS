@@ -101,6 +101,7 @@ NSArray * Getdate(NSArray * arr) {
 }
 
 + (NSString *)stringWithText:(NSString *)string {
+    
     //返回的密码
     NSMutableString *mimaString = [NSMutableString string];
     NSMutableArray *arrString = [NSMutableArray array];
@@ -173,6 +174,9 @@ NSArray * Getdate(NSArray * arr) {
 
 + (NSString *)getDate:(NSString *)string {
     NSString *dateString = [string substringWithRange:NSMakeRange(12, 3)];
+    if ([dateString isEqualToString:@"999"]) {
+        return @"锁期解除！";
+    }
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:[dateString floatValue] * 60 * 60 * 24];
     
     return [self getCurrTime:date];
@@ -187,7 +191,7 @@ NSArray * Getdate(NSArray * arr) {
     // 创建 格式 对象
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     // 设置 日期 格式 可以根据自己的需求 随时调整， 否则计算的结果可能为 nil
-    formatter.dateFormat = @"yyyy-MM-dd";
+    formatter.dateFormat = @"yyyyMMdd";
     // 将字符串日期 转换为 NSDate 类型
     NSDate *endDate = [formatter dateFromString:featureDate];
     // 判断当前日期 和 未来某个时刻日期 相差的天数
@@ -195,6 +199,9 @@ NSArray * Getdate(NSArray * arr) {
     // 将总天数 换算为 以 周 计算（假如 相差10天，其实就是等于 相差 1周零3天，只需要取3天，更加方便计算）
     long day = days >= 7 ? days % 7 : days;
     long week = [self getNowWeekday] + day;
+    if (week > 7) {
+        week = week % 7;
+    }
     switch (week) {
         case 1:
             return @"  星期天";
@@ -221,7 +228,8 @@ NSArray * Getdate(NSArray * arr) {
         default:
             break;
     }
-    return nil;
+    NSLog(@"%@", @(week));
+    return @"";
 }
 
 /**
@@ -244,7 +252,7 @@ NSArray * Getdate(NSArray * arr) {
         return 0;
     }
     else {
-        NSLog(@"%@",[[NSString alloc] initWithFormat:@"%i天%i小时%i分钟",days,hours,minute]);
+//        NSLog(@"%@",[[NSString alloc] initWithFormat:@"%i天%i小时%i分钟",days,hours,minute]);
         // 之所以要 + 1，是因为 此处的days 计算的结果 不包含当天 和 最后一天\
         （如星期一 和 星期四，计算机 算的结果就是2天（星期二和星期三），日常算，星期一——星期四相差3天，所以需要+1）\
         对于时分 没有进行计算 可以忽略不计
@@ -273,13 +281,15 @@ NSArray * Getdate(NSArray * arr) {
     //用[NSDate date]可以获取系统当前时间
     NSString *currentDateStr = [dateFormatter stringFromDate:date];
     
-    return currentDateStr;
+    return [currentDateStr stringByAppendingString:[self featureWeekdayWithDate:currentDateStr]];
 }
 
 
 //获取密码和时间
 + (void)getParsswordWithString:(NSString *)string withDateBlock:(void(^)(NSString *a,NSString *b, ProductClass *obj))blcok {
-    if (string.length != 15) {
+    NSString *pString = @"^\\d{15}$";
+    NSPredicate *p1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pString];
+    if (![p1 evaluateWithObject:string]) {
         [self popAlertView:@"请检查输入是否有误"];
         return ;
     }

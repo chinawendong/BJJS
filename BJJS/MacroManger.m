@@ -64,6 +64,12 @@
         const char* char_f = property_getName(property);
         NSString *propertyName = [NSString stringWithUTF8String:char_f];
         id propertyValue = [objc valueForKey:(NSString *)propertyName];
+        if ([propertyName isEqualToString:@"dateOld"]) {
+            propertyValue = [propertyValue componentsSeparatedByString:@" "].firstObject;
+        }
+        if ([propertyValue isEqualToString:@"锁期解除！"]) {
+            propertyValue = @"99999999";
+        }
         if (i == outCount - 1) {
             [str appendString:[NSString stringWithFormat:@"'%@'", propertyValue]];
         }else{
@@ -85,6 +91,7 @@
         const char* char_f = property_getName(property);
         NSString *propertyName = [NSString stringWithUTF8String:char_f];
         id propertyValue = [objc valueForKey:(NSString *)propertyName];
+
         [dic setValue:propertyValue forKey:propertyName];
         
         [str appendString:[NSString stringWithFormat:@"'%@',", propertyValue]];

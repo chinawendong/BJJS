@@ -33,6 +33,13 @@
     [queue inDatabase:^(FMDatabase *db) {
         if ([objc isKindOfClass:[ProductClass class]]) {
             ProductClass *pc = objc;
+
+            pc.dateOld = [pc.dateOld componentsSeparatedByString:@" "].firstObject;
+            
+            if ([pc.dateOld isEqualToString:@"锁期解除！"]) {
+                pc.dateOld = @"99999999";
+            }
+
             [db executeUpdate:[NSString stringWithFormat:@"UPDATE %@ SET %@ = '%@' WHERE %@ = '%@'", tableName,@"dateOld", pc.dateOld,@"productSerialNumber", pc.productSerialNumber]]? NSLog(@"更新成功") : NSLog(@"更新失败");
         }
     }];
