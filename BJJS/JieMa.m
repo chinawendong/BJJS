@@ -385,7 +385,11 @@ NSArray * Getdate(NSArray * arr) {
         NSString *s = [NSString stringWithFormat:@"解锁码: %@ %@ %@", fistr,two,three];
         self.block([NSString stringWithFormat:@"到期时间: %@", self.deadlineDate],s,nil);
     }else {
-        [JieMa popAlertView2:@"输入格式有误"];
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:self.productSerialNumber message:@"重新输入:" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        al.alertViewStyle = UIAlertViewStyleSecureTextInput;
+        al.tag = 1000001;
+        al.delegate = [JieMa shaerJieMa];
+        [al show];
     }
     if (alertView.tag == 10002) {
         UIAlertView *al = [[UIAlertView alloc]initWithTitle:self.productSerialNumber message:@"重新输入:" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
