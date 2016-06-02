@@ -76,7 +76,7 @@
 }
 
 - (XWDateStatue)getCurrTime  {
-    if ([_dateOld isEqualToString:@"    "]) {
+    if ([_dateOld isEqualToString:@"    "] || [_dateOld isEqualToString:@"99999999"]) {
         return XWDateOldStatueNone;
     }
     NSString *dateStr= _dateOld;

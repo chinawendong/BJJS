@@ -101,7 +101,6 @@ NSArray * Getdate(NSArray * arr) {
 }
 
 + (NSString *)stringWithText:(NSString *)string {
-    
     //返回的密码
     NSMutableString *mimaString = [NSMutableString string];
     NSMutableArray *arrString = [NSMutableArray array];
@@ -306,7 +305,12 @@ NSArray * Getdate(NSArray * arr) {
         ProductClass *p1 = p.firstObject;
         NSString *paswod = p1.productPassword;
         if (paswod.length) {
-            NSString *newSteing = [JieMa stringWithText:[m.string stringByReplacingOccurrencesOfString:m.productSerialNumber withString:paswod]];
+            NSString *f = [m.string substringWithRange:NSMakeRange(0, 6)];
+            NSString *t = [m.string substringWithRange:NSMakeRange(12, 3)];
+            NSString *pas = [NSString stringWithFormat:@"%@%@%@", f,paswod,t];
+
+            NSString *newSteing = [JieMa stringWithText:pas];
+
             NSString *fistr = [newSteing substringWithRange:NSMakeRange(0, 2)];
             NSString *two = [newSteing substringWithRange:NSMakeRange(2, 4)];
             NSString *three = [newSteing substringWithRange:NSMakeRange(6, 4)];
@@ -352,24 +356,39 @@ NSArray * Getdate(NSArray * arr) {
 
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (alertView.tag == 1000001 && buttonIndex) {
-        NSString *string = [alertView textFieldAtIndex:0].text;
-        if (string.length < 6) {
-            [JieMa popAlertView2:@"密码格式不正确"];
-            return;
-        }
+    NSString *pString = @"^\\d{6}$";
+    NSPredicate *p1 = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pString];
+    NSString *string = [alertView textFieldAtIndex:0].text;
+
+    if (alertView.tag == 1000001 && buttonIndex && [p1 evaluateWithObject:string]) {
+
+        JieMa *m = [JieMa shaerJieMa];
+
         ProductClass *pc = [ProductClass new];
         pc.productPassword = string;
-        pc.productSerialNumber = self.productSerialNumber;
-        pc.dateOld = self.deadlineDate;
+        pc.productSerialNumber = m.productSerialNumber;
+        pc.dateOld = m.deadlineDate;
         [TheDatabaseManager addObjectDataWithTableName:JIESUOTABELNAME installObject:pc oldObject:nil withAlerFlag:NO];
         [TheDatabaseManager quaueupdataList:JIESUOTABELNAME andProperString:nil withSteing:nil andNewString:nil andClass:[ProductClass class] withBlock:^(NSArray *arr) {
         }];
-        NSString *s = [NSString stringWithFormat:@"解锁码: %@ %@ %@", [[JieMa stringWithText:[_string stringByReplacingOccurrencesOfString:self.productSerialNumber withString:string]]substringWithRange:NSMakeRange(0, 2)], [[JieMa stringWithText:[_string stringByReplacingOccurrencesOfString:self.productSerialNumber withString:string]]substringWithRange:NSMakeRange(2, 4)],[[JieMa stringWithText:[_string stringByReplacingOccurrencesOfString:self.productSerialNumber withString:string]]substringWithRange:NSMakeRange(6, 4)]];
+
+        NSString *f = [m.string substringWithRange:NSMakeRange(0, 6)];
+        NSString *t = [m.string substringWithRange:NSMakeRange(12, 3)];
+        NSString *pas = [NSString stringWithFormat:@"%@%@%@", f,string,t];
+        
+        NSString *newSteing = [JieMa stringWithText:pas];
+
+        NSString *fistr = [newSteing substringWithRange:NSMakeRange(0, 2)];
+        NSString *two = [newSteing substringWithRange:NSMakeRange(2, 4)];
+        NSString *three = [newSteing substringWithRange:NSMakeRange(6, 4)];
+        
+        NSString *s = [NSString stringWithFormat:@"解锁码: %@ %@ %@", fistr,two,three];
         self.block([NSString stringWithFormat:@"到期时间: %@", self.deadlineDate],s,nil);
+    }else {
+        [JieMa popAlertView2:@"输入格式有误"];
     }
     if (alertView.tag == 10002) {
-        UIAlertView *al = [[UIAlertView alloc]initWithTitle:self.productSerialNumber message:@"对应密码:" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *al = [[UIAlertView alloc]initWithTitle:self.productSerialNumber message:@"重新输入:" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         al.alertViewStyle = UIAlertViewStyleSecureTextInput;
         al.tag = 1000001;
         al.delegate = [JieMa shaerJieMa];
